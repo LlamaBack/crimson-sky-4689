@@ -16,7 +16,6 @@ RSpec.describe 'chef ingredients index page' do
     it 'shows unique chef ingredients' do
         dish2.ingredients << ingredient1
         visit "/chefs/#{chef1.id}/ingredients"
-        save_and_open_page
         expect(page).to have_content(ingredient1.name).once
         expect(page).to have_content(ingredient2.name)
         expect(page).to have_content(ingredient3.name)

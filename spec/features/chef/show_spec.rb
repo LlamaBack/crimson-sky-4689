@@ -14,7 +14,7 @@ RSpec.describe 'chef show page' do
 
     it 'links to chef ingredients index page' do
         visit chef_path(chef1)
-        click_link("Go to Ingredients")
+        click_link("Ingredients Used")
         expect(current_path).to eq("/chefs/#{chef1.id}/ingredients")
     end
 
