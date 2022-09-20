@@ -10,7 +10,8 @@ RSpec.describe Chef, type: :model do
   let!(:ingredient3) {dish2.ingredients.create!(name: "spring mix", calories: 2)}
   let!(:ingredient4) {dish2.ingredients.create!(name: "ranch", calories: 12)}
 
-  let!(:ingredient5) {Ingredient.create!(name: "mystery", calories: 0)}
+  let!(:dish3) {chef1.dishes.create!(name: "huh?", description: "what stuff", )}
+  let!(:ingredient5) {dish3.ingredients.create!(name: "mystery", calories: 0)}
 
   describe "validations" do
     it {should validate_presence_of :name}
@@ -21,7 +22,15 @@ RSpec.describe Chef, type: :model do
   describe "instance methods" do
     describe "#ingredients_used" do
       it "gives a unique list of ingredients the chef used" do
-        expect(chef1.ingredients_used).to eq([ingredient1,ingredient2,ingredient3,ingredient4])
+        expect(chef1.ingredients_used).to eq([ingredient1,ingredient2,ingredient3,ingredient4,ingredient5])
+      end
+    end
+    describe "#top_three_ingredients" do
+      it 'returns most 3 ingredients used' do
+        dish1.ingredients << ingredient4
+        dish2.ingredients << [ingredient1, ingredient5]
+        dish3.ingredients << [ingredient1, ingredient5, ingredient5]
+        expect(chef1.top_three_ingredients).to eq([[ingredient5,4],[ingredient1,3],[ingredient4,2]])
       end
     end
   end
